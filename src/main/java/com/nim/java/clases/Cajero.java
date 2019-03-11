@@ -9,27 +9,14 @@ package com.nim.java.clases;
  *
  * @author Nimrod
  */
-public class Cajero extends Thread {
+public class Cajero implements Runnable {
 
-    private String nombreCajero;
     private Cliente cliente;
     private long tiempoInicial;
 
-    public Cajero() {
-    }
-
-    public Cajero(String nombreCajero, Cliente cliente, long tiempoInicial) {
-        this.nombreCajero = nombreCajero;
+    public Cajero(Cliente cliente, long tiempoInicial) {
         this.cliente = cliente;
         this.tiempoInicial = tiempoInicial;
-    }
-
-    public String getNombreCajero() {
-        return nombreCajero;
-    }
-
-    public void setNombreCajero(String nombreCajero) {
-        this.nombreCajero = nombreCajero;
     }
 
     public Cliente getCliente() {
@@ -46,15 +33,17 @@ public class Cajero extends Thread {
 
     public void setTiempoInicial(long tiempoInicial) {
         this.tiempoInicial = tiempoInicial;
-
     }
 
+    
+    
     @Override
     public void run() {
 
-        System.out.println("El Cajero " + getNombreCajero() + " está comenzando a procesar la compra de "
+        System.out.println("El Cajero " + Thread.currentThread().getName() 
+                + " está comenzando a procesar la compra de "
                 + this.cliente.getNombreCliente() + " en "
-                + (System.currentTimeMillis() - this.tiempoInicial) / 1000 + " seg. \n");
+                + (System.currentTimeMillis() - this.tiempoInicial) / 1000 + " seg.");
 
         for (int i = 0; i < this.cliente.getCarritoCompra().length; i++) {
             this.segundosEsperando(cliente.getCarritoCompra()[i]);
@@ -62,7 +51,8 @@ public class Cajero extends Thread {
                     + " ha sido procesado en " + (System.currentTimeMillis() - this.tiempoInicial) / 1000 + " seg.");
         }
 
-        System.out.println("El cajero " + this.nombreCajero + " ha terminado de procesar el requerimiento de "
+        System.out.println("El cajero " + Thread.currentThread().getName()
+                + " ha terminado de procesar el requerimiento de "
                 + this.cliente.getNombreCliente() + " en" + " ha sido procesado en "
                 + (System.currentTimeMillis() - this.tiempoInicial) / 1000 + " seg.");
 
